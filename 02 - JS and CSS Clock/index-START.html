@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
 </head>
+
 <body>
 
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
 
   <style>
@@ -43,32 +45,102 @@
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
+        0 0 0 4px rgba(0, 0, 0, 0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
+    }
+
+    .clock-face:after {
+      content: '';
+      position: absolute;
+      display: block;
+      background: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
+      width: 100%;
+      height: 100%;
       position: absolute;
-      top: 50%;
     }
 
+    .second-hand:after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 10px;
+      height: 50%;
+      background: yellow;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .min-hand:after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 10px;
+      height: 40%;
+      background: white;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .hour-hand:after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 15px;
+      height: 30%;
+      background: red;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 0);
+    }
   </style>
 
   <script>
-
+    (function () {
+      const minHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+      const secondHand = document.querySelector('.second-hand');
+      function setTime() {
+        let date = new Date();
+        let second = date.getSeconds();
+        let secondDeg = second * 6;
+        secondHand.style.transform = `rotate(${secondDeg}deg)`;
+        let min = date.getMinutes();
+        let minDeg = min * 6 + (second / 60) * 6;
+        minHand.style.transform = `rotate(${minDeg}deg)`;
+        let hour = date.getHours();
+        let hourDeg = hour * 30 + (min / 60) * 30;
+        hourHand.style.transform = `rotate(${hourDeg}deg)`;
+      };
+      function animationHandler() {
+        setTime();
+        window.requestAnimationFrame(animationHandler);
+      }
+      window.requestAnimationFrame(animationHandler);
+      //setInterval(setTime, 1000);
+    })()
 
   </script>
 </body>
+
 </html>
