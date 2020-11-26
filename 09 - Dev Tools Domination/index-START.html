@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
+
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
@@ -17,19 +19,38 @@
       p.style.fontSize = '50px';
     }
 
+    let console = {
+      isDev: true,
+      log(...args) {
+        if (!this.isDev) return;
+        window.console.log(...args);
+      },
+      warn(...args) {
+        window.console.warn(...args);
+      },
+      assert(...args) {
+        window.console.assert(...args);
+      }
+    };
     // Regular
+    console.log(123, 456);
 
     // Interpolated
+    console.log('Hello I am a %s string!', '💩');
 
     // Styled
 
     // warning!
+    console.warn('OH NOOO');
 
     // Error :|
 
     // Info
 
     // Testing
+    const p = document.querySelector('p');
+    console.assert(false, 'yoyo');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
 
     // clearing
 
@@ -43,4 +64,5 @@
 
   </script>
 </body>
+
 </html>

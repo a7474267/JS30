@@ -61,28 +61,34 @@
 
   <script>
     (function () {
-      window.addEventListener('keydown', musicHandler);
-      function removeTransition(e) {
-        if (e.propertyName === 'transform') {
-          e.currentTarget.classList.remove('playing');
-        };
-      };
-      function musicHandler(e) {
-        let audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      window.addEventListener('keydown', playHandler);
+      function playHandler(e) {
+        console.log(e);
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
         if (audio) {
           audio.currentTime = 0;
           audio.play();
-        };
-        let dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        }
+
+        const dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
         if (dom) {
           dom.classList.add('playing');
         };
-        let doms = document.querySelectorAll('.key');
-        doms.forEach(function (key) {
-          key.addEventListener('transitionend', removeTransition);
-        })
-      };
-    })();
+
+      }
+      function transitionHandler(e) {
+        if (e.propertyName === "transform") {
+          e.currentTarget.classList.remove('playing');
+        }
+      }
+
+      const keys = Array.from(document.querySelectorAll('.key'));
+      keys.forEach(function (key) {
+        key.addEventListener('transitionend', transitionHandler);
+      });
+
+
+    })()
   </script>
 
 

@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
   <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
+
 <body>
-<script>
-</script>
+  <script>
+    const secretCode = [38, 38, 40, 40, 37, 39, 66, 65];
+    const input = [];
+    window.addEventListener('keyup', function (e) {
+      //console.log(e);
+      input.push(e.keyCode);
+      input.splice(-secretCode.length - 1, input.length - secretCode.length);
+      if (input.join(',') == secretCode.join(',')) {
+        cornify_add();
+      }
+      console.log(input);
+    })
+  </script>
 </body>
+
 </html>
